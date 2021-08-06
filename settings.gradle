@@ -1,0 +1,3 @@
+rootProject.name = "aruko"
+include ':app'
+include ':openCVLibrary3415'
