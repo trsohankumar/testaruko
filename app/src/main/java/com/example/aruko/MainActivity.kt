@@ -1,8 +1,10 @@
 package com.example.aruko
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,8 +25,8 @@ import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.core.MatOfInt
 import org.opencv.imgproc.Imgproc
-
 import java.util.*
+
 
 
 class MainActivity : AppCompatActivity() , CameraBridgeViewBase.CvCameraViewListener2 {
@@ -83,14 +85,9 @@ class MainActivity : AppCompatActivity() , CameraBridgeViewBase.CvCameraViewList
 
 
 
-        camera = findViewById(R.id.main_camera);
+        camera = findViewById(R.id.main_camera)
         camera!!.visibility = View.VISIBLE
-        camera!!.setCvCameraViewListener(this);
-
-
-
-
-
+        camera!!.setCvCameraViewListener(this)
 
 
     }
@@ -169,6 +166,9 @@ class MainActivity : AppCompatActivity() , CameraBridgeViewBase.CvCameraViewList
             rvecs = Mat()
             tvecs = Mat()
             Aruco.estimatePoseSingleMarkers(corners, 0.04f, cameraMatrix, distCoeffs, rvecs, tvecs)
+            val intent = Intent(this,ArActivity::class.java)
+            startActivity(intent)
+
         }
 
         return rgb
@@ -177,6 +177,7 @@ class MainActivity : AppCompatActivity() , CameraBridgeViewBase.CvCameraViewList
     override fun onCameraViewStopped() {
         rgb!!.release()
     }
+
 }
 
 
