@@ -24,6 +24,8 @@ import android.util.Log
 import com.google.ar.core.Anchor
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.Node
+import com.google.ar.sceneform.math.Vector3
 import java.util.function.Consumer
 
 
@@ -36,13 +38,16 @@ class ArActivity : AppCompatActivity() {
         setContentView(R.layout.activity_ar)
         arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment?
         arFragment!!.arSceneView.planeRenderer.isVisible = false
-        arFragment!!.setOnTapArPlaneListener { hitresult: HitResult, plane: Plane, motionevent: MotionEvent? ->
+     //   arFragment!!.planeDiscoveryController.hide()
+    //    arFragment!!.planeDiscoveryController.setInstructionView(null)
+        arFragment!!.setOnTapArPlaneListener { hitresult: HitResult, plane: Plane, _ ->
             if (plane.type != Plane.Type.HORIZONTAL_UPWARD_FACING) return@setOnTapArPlaneListener
             val anchor = hitresult.createAnchor()
             placeObject(arFragment, anchor)
         }
     }
 
+    /*
     private fun placeObject(arFragment: ArFragment?, anchor: Anchor) {
         val GLTF_ASSET = "Red Sphere.glb"
 
@@ -76,12 +81,34 @@ class ArActivity : AppCompatActivity() {
             }
     }
 
+     */
+    private fun placeObject(arFragment: ArFragment?, anchor: Anchor) {
+        val GLTF_ASSET = "Red Sphere.glb"
+        val modelRenderable = ModelRenderable.builder().setSource((arFragment!!.requireContext()), RenderableSource.builder().setSource(
+                this,
+                Uri.parse(GLTF_ASSET),
+                RenderableSource.SourceType.GLB
+            ).build())
+            .build()
+        //when the model render is build add node to scene
+        modelRenderable.thenAccept { renderableObject -> addNodeToScene(arFragment, anchor, renderableObject) }
+        //handle error
+        modelRenderable.exceptionally {
+            val toast = Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT)
+            toast.show()
+            null
+        }
+    }
+
     private fun addNodeToScene(arFragment: ArFragment?, anchor: Anchor, renderable: Renderable) {
         val anchorNode = AnchorNode(anchor)
         val node = TransformableNode(arFragment!!.transformationSystem)
         node.renderable = renderable
         node.setParent(anchorNode)
+        node.localPosition = Vector3(0f,-0.5f,-0.5f)
         arFragment.arSceneView.scene.addChild(anchorNode)
+
+
 
     }
 
