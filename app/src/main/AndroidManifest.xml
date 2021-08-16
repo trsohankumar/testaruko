@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.aruko">
+    package="com.example.aruko" >
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -25,7 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="landscape"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Aruko">
+        android:theme="@style/Theme.Aruko" >
         <activity
             android:name=".ArActivity"
             android:exported="true" />
@@ -34,7 +34,7 @@
             android:name="com.google.ar.core"
             android:value="optional" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
