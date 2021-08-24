@@ -21,9 +21,7 @@ import org.opencv.aruco.Aruco
 import org.opencv.aruco.DetectorParameters
 import org.opencv.aruco.DetectorParameters.*
 import org.opencv.aruco.Dictionary
-import org.opencv.core.CvType
-import org.opencv.core.Mat
-import org.opencv.core.MatOfInt
+import org.opencv.core.*
 import org.opencv.imgproc.Imgproc
 import java.util.*
 
@@ -166,8 +164,10 @@ class MainActivity : AppCompatActivity() , CameraBridgeViewBase.CvCameraViewList
             rvecs = Mat()
             tvecs = Mat()
             Aruco.estimatePoseSingleMarkers(corners, 0.04f, cameraMatrix, distCoeffs, rvecs, tvecs)
-            val intent = Intent(this,ArActivity::class.java)
-            startActivity(intent)
+           // val intent = Intent(this,ArActivity::class.java)
+          //  startActivity(intent)
+
+            Imgproc.circle(rgb, Point(300.0,150.0),50, Scalar(0.0,0.0,0.0),10)
 
         }
 
