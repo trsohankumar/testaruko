@@ -86,6 +86,8 @@ class MainActivity : AppCompatActivity() , CameraBridgeViewBase.CvCameraViewList
         camera = findViewById(R.id.main_camera)
         camera!!.visibility = View.VISIBLE
         camera!!.setCvCameraViewListener(this)
+       // cameraView.setMaxFrameSize(1280, 720);
+        camera!!.height
 
 
     }
@@ -163,11 +165,19 @@ class MainActivity : AppCompatActivity() , CameraBridgeViewBase.CvCameraViewList
             Aruco.drawDetectedMarkers(rgb, corners, ids)
             rvecs = Mat()
             tvecs = Mat()
-            Aruco.estimatePoseSingleMarkers(corners, 0.04f, cameraMatrix, distCoeffs, rvecs, tvecs)
-           // val intent = Intent(this,ArActivity::class.java)
-          //  startActivity(intent)
+            //code to get the id of the detected markers
+            val id = ids!![0, 0][0].toInt()
 
-            Imgproc.circle(rgb, Point(300.0,150.0),50, Scalar(0.0,0.0,0.0),10)
+            Aruco.estimatePoseSingleMarkers(corners, 0.04f, cameraMatrix, distCoeffs, rvecs, tvecs)
+        //    Log.d("Corner",corners!![0].toString())
+
+            //if(id == 33){
+                Imgproc.circle(rgb, Point(375.0,250.0),50, Scalar(0.0,0.0,0.0),10)
+           // }
+
+
+
+
 
         }
 
